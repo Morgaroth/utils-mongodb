@@ -1,14 +1,29 @@
-import sbt._
-
+import com.typesafe.sbt.pgp.PgpKeys._
+import sbt.Keys._
+import sbt.{State, TaskKey, _}
+import sbtrelease.ReleaseStep
+import sbtrelease.Utilities._
+import xerial.sbt.Sonatype.SonatypeKeys._
 import scala.xml.transform.{RewriteRule, RuleTransformer}
+
+object SbtReleaseHelpers {
+  def oneTaskStep = (task: TaskKey[_]) => ReleaseStep(action = (st: State) => {
+    val extracted = st.extract
+    val ref = extracted.get(thisProjectRef)
+    extracted.runAggregated(task in Global in ref, st)
+  })
+
+  val publishArtifactsLocally = oneTaskStep(publishLocal)
+  val publishArtifactsSigned = oneTaskStep(publishSigned)
+  val finishReleaseAtSonatype = oneTaskStep(sonatypeReleaseAll)
+}
 
 object SbtSonatypeHelpers {
   def githubPom(projectName: String) = pom(s"https://github.com/Morgaroth/$projectName", s"git@github.com:Morgaroth/$projectName.git")
 
+  //@formatter:off
   def pom(projectUrl: String, developerUrl: String) = {
-    <url>
-      {projectUrl}
-    </url>
+    <url>{projectUrl}</url>
       <licenses>
         <license>
           <name>BSD-style</name>
@@ -17,12 +32,8 @@ object SbtSonatypeHelpers {
         </license>
       </licenses>
       <scm>
-        <url>
-          {developerUrl}
-        </url>
-        <connection>scm:git:
-          {developerUrl}
-        </connection>
+        <url>{developerUrl}</url>
+        <connection>scm:git:{developerUrl}</connection>
       </scm>
       <developers>
         <developer>
@@ -30,6 +41,7 @@ object SbtSonatypeHelpers {
           <name>Mateusz Jaje</name>
         </developer>
       </developers>
+//@formatter:on
   }
 
   def publishToGen = (ver: String) => {
@@ -54,6 +66,6 @@ object PackagingHelpers {
       }
     }
     val transformer = new RuleTransformer(rewriteRule)
-    transformer.transform(node)(0)
+    transformer.transform(node).head
   }
 }

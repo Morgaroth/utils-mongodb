@@ -1,14 +1,16 @@
-name := """utils-mongodb"""
+import SbtReleaseHelpers._
+import sbtbuildinfo.Plugin._
+import sbtrelease.ReleasePlugin._
+import sbtrelease.ReleaseStateTransformations._
+import sbtrelease.ReleaseStep
 
-version := "1.2.6-SNAPSHOT"
+name := """utils-mongodb"""
 
 scalacOptions ++= Seq("-feature")
 
 organization := """io.github.morgaroth"""
 
-//pomExtra := ThisProject.commonPomFile
-
-//publishTo := ThisProject.publishTo
+crossScalaVersions := Seq("2.10.4", "2.11.5")
 
 resolvers ++= Seq(
   "Sonatype OSS Releases" at "http://oss.sonatype.org/content/repositories/releases/"
@@ -28,3 +30,39 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies <+= ficusDependency
+
+buildInfoSettings
+
+buildInfoKeys := Seq[BuildInfoKey](
+  name, version, scalaVersion, sbtVersion, libraryDependencies, resolvers
+)
+
+buildInfoPackage := "io.github.morgaroth.utils.mongodb.salat.build"
+
+sourceGenerators in Compile <+= buildInfo
+
+releaseSettings
+
+ReleaseKeys.releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies, // : ReleaseStep
+  inquireVersions, // : ReleaseStep
+  runClean,
+  runTest, // : ReleaseStep
+  setReleaseVersion, // : ReleaseStep
+  publishArtifactsSigned,
+  finishReleaseAtSonatype,
+  commitReleaseVersion, // : ReleaseStep, performs the initial git checks
+  tagRelease, // : ReleaseStep
+  setNextVersion, // : ReleaseStep
+  commitNextVersion, // : ReleaseStep
+  pushChanges // : ReleaseStep, also checks that an upstream branch is properly configured
+)
+
+publishArtifact in Test := false
+
+pomExtra := SbtSonatypeHelpers.githubPom(name.value)
+
+publishTo := SbtSonatypeHelpers.publishToGen(version.value)
+
+// Do not include log4jdbc as a dependency.
+pomPostProcess := PackagingHelpers.removeTestOrSourceDependencies
