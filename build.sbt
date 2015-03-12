@@ -17,7 +17,7 @@ resolvers ++= Seq(
 )
 
 val ficusDependency = scalaVersion {
-  case "2.11.4" | "2.11.2" | "2.11.0" =>
+  case ver_2_11 if  ver_2_11 startsWith "2.11." =>
     "net.ceedubs" %% "ficus" % "1.1.1"
   case _ =>
     "net.ceedubs" %% "ficus" % "1.0.1" exclude("com.typesafe", "config")
@@ -26,7 +26,6 @@ val ficusDependency = scalaVersion {
 libraryDependencies ++= Seq(
   "com.novus" %% "salat" % "1.9.9",
   "com.typesafe" % "config" % "1.2.1"
-
 )
 
 libraryDependencies <+= ficusDependency
