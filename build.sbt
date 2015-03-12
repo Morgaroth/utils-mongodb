@@ -41,6 +41,8 @@ buildInfoPackage := "io.github.morgaroth.utils.mongodb.salat.build"
 
 sourceGenerators in Compile <+= buildInfo
 
+sonatypeSettings
+
 releaseSettings
 
 crossBuild := true
