@@ -3,6 +3,7 @@ import sbtbuildinfo.Plugin._
 import sbtrelease.ReleasePlugin._
 import sbtrelease.ReleaseStateTransformations._
 import sbtrelease.ReleaseStep
+import sbtrelease.ReleasePlugin.ReleaseKeys.crossBuild
 
 name := """utils-mongodb"""
 
@@ -41,6 +42,8 @@ buildInfoPackage := "io.github.morgaroth.utils.mongodb.salat.build"
 sourceGenerators in Compile <+= buildInfo
 
 releaseSettings
+
+crossBuild := true
 
 ReleaseKeys.releaseProcess := Seq[ReleaseStep](
   checkSnapshotDependencies, // : ReleaseStep
