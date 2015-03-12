@@ -60,9 +60,9 @@ ReleaseKeys.releaseProcess := Seq[ReleaseStep](
 
 publishArtifact in Test := false
 
-pomExtra := SbtSonatypeHelpers.githubPom(name.value)
+pomExtra := githubPom(name.value,"Mateusz Jaje","Morgaroth")
 
-publishTo := SbtSonatypeHelpers.publishToGen(version.value)
+publishTo := publishRepoForVersion(version.value)
 
 // Do not include log4jdbc as a dependency.
 pomPostProcess := PackagingHelpers.removeTestOrSourceDependencies
