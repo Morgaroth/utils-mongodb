@@ -11,7 +11,7 @@ object SbtReleaseHelpers {
     val extracted = st.extract
     val ref = extracted.get(thisProjectRef)
     extracted.runAggregated(task in Global in ref, st)
-  })
+  }, enableCrossBuild = true)
 
   val publishArtifactsLocally = oneTaskStep(publishLocal)
   val publishArtifactsSigned = oneTaskStep(publishSigned)
