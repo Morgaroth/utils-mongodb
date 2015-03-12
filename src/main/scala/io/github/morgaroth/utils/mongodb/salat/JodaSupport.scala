@@ -9,5 +9,5 @@ trait JodaSupport {
   this: SalatDAO[_, _] =>
   RegisterJodaLocalDateTimeConversionHelpers()
   RegisterJodaTimeConversionHelpers()
-  RegisterJodaTimeZoneConversionHelpers
+  RegisterJodaTimeZoneConversionHelpers()
 }
