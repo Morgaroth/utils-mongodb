@@ -7,15 +7,16 @@ import xerial.sbt.Sonatype.SonatypeKeys._
 import scala.xml.transform.{RewriteRule, RuleTransformer}
 
 object SbtReleaseHelpers {
-  def oneTaskStep = (task: TaskKey[_]) => ReleaseStep(action = (st: State) => {
-    val extracted = st.extract
-    val ref = extracted.get(thisProjectRef)
-    extracted.runAggregated(task in Global in ref, st)
-  }, enableCrossBuild = true)
+  def oneTaskStep = (task: TaskKey[_], xCompile: Boolean) =>
+    ReleaseStep(action = (st: State) => {
+      val extracted = st.extract
+      val ref = extracted.get(thisProjectRef)
+      extracted.runAggregated(task in Global in ref, st)
+    }, enableCrossBuild = xCompile)
 
-  val publishArtifactsLocally = oneTaskStep(publishLocal)
-  val publishArtifactsSigned = oneTaskStep(publishSigned)
-  val finishReleaseAtSonatype = oneTaskStep(sonatypeReleaseAll)
+  val publishArtifactsLocally = oneTaskStep(publishLocal, true)
+  val publishArtifactsSigned = oneTaskStep(publishSigned, true)
+  val finishReleaseAtSonatype = oneTaskStep(sonatypeReleaseAll, false)
 }
 
 object PackagingHelpers {
