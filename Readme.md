@@ -1,9 +1,8 @@
 # Sbt line
 
 ```scala
-libraryDependencies += "io.github.morgaroth" %% "utils-mongodb" % "1.2.6"
+libraryDependencies += "io.github.morgaroth" %% "utils-mongodb" % "1.2.9"
 ```
-
 
 # CHANGELOG
 
