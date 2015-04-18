@@ -1,3 +1,5 @@
+[![Codacy Badge](https://www.codacy.com/project/badge/ddfe5e51bfdd41a99e8cabb41aed8fa4)](https://www.codacy.com/app/mateuszjaje/utils-mongodb)
+
 # Sbt line
 
 ```scala
