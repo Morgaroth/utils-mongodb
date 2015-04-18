@@ -7,6 +7,8 @@ import com.novus.salat.dao.SalatDAO
 import com.typesafe.config.Config
 import net.ceedubs.ficus.Ficus._
 
+import scala.language.reflectiveCalls
+
 /**
  * Helper class for constructing MongoDB DAO, uses Typesafe configuration and collection name as
  * constructor arguments, prepared especially for objects with key of type String
@@ -15,11 +17,11 @@ import net.ceedubs.ficus.Ficus._
  * case class Foo(@Key("_id") someID:String, someInt:Integer, someObject: anotherObject)
  *
  * application.conf:
- *   ...
- *   this.app.Foo.Database{
- *     uri = "mongodb://localhost/FooDatabase"
- *   }
- *   ...
+ * ...
+ * this.app.Foo.Database{
+ * uri = "mongodb://localhost/FooDatabase"
+ * }
+ * ...
  *
  * val config = ConfigFactory.load().getConfig("this.app.Foo.Database") // reads config with "uri" element
  * object FooDAO extends MongoDAOStringKey[Foo](config,"foos")
@@ -33,7 +35,6 @@ abstract class MongoDAOStringKey[ObjectType <: AnyRef](config: Config, collectio
       val dbName = clientURI.database.getOrElse {
         throw new IllegalArgumentException(s"You must provide database name in connection uri")
       }
-      import scala.language.reflectiveCalls
       MongoClient(clientURI)(dbName).getCollection(collectionName).asScala
     })(mot, implicitly[Manifest[String]], ctx) {
   override def defaultWriteConcern = WriteConcern.Acknowledged
