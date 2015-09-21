@@ -19,7 +19,7 @@ resolvers ++= Seq(
 
 val ficusDependency = scalaVersion {
   case ver_2_11 if  ver_2_11 startsWith "2.11." =>
-    "net.ceedubs" %% "ficus" % "1.1.1"
+    "net.ceedubs" %% "ficus" % "1.1.2"
   case _ =>
     "net.ceedubs" %% "ficus" % "1.0.1" exclude("com.typesafe", "config")
 }

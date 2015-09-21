@@ -8,6 +8,9 @@ libraryDependencies += "io.github.morgaroth" %% "utils-mongodb" % "1.2.9"
 
 # CHANGELOG
 
+* v1.2.10:
+    * updated Ficus library
+
 * v1.2.6:
 
     * added second dao class: `MongoDAOStringKey` as class provides dao based con typesafe config object and collection name
