@@ -13,3 +13,5 @@ addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "0.2.1")
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.0")
 
 addSbtPlugin("io.github.morgaroth" % "sbt-sonatype-utils" % "0.2")
+
+addSbtPlugin("io.github.morgaroth" % "sbt-commons" % "0.12")

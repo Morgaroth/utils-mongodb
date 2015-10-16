@@ -27,15 +27,15 @@ import scala.language.reflectiveCalls
  * object FooDAO extends MongoDAOStringKey[Foo](config,"foos")
  *
  */
-abstract class MongoDAOStringKey[ObjectType <: AnyRef](config: Config, collectionName: String)
-                                                      (implicit mot: Manifest[ObjectType], ctx: Context)
-  extends SalatDAO[ObjectType, String](
+abstract class MongoDAOAnyKey[ObjectType <: AnyRef, KeyType <: Any](config: Config, collectionName: String)
+                                                                   (implicit mot: Manifest[ObjectType], mkt: Manifest[KeyType], ctx: Context)
+  extends SalatDAO[ObjectType, KeyType](
     collection = {
       val clientURI = MongoClientURI(config.as[String]("uri"))
       val dbName = clientURI.database.getOrElse {
         throw new IllegalArgumentException(s"You must provide database name in connection uri")
       }
       MongoClient(clientURI)(dbName).getCollection(collectionName).asScala
-    })(mot, implicitly[Manifest[String]], ctx) {
+    }) {
   override def defaultWriteConcern = WriteConcern.Acknowledged
 }

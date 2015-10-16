@@ -11,22 +11,22 @@ scalacOptions ++= Seq("-feature")
 
 organization := """io.github.morgaroth"""
 
-crossScalaVersions := Seq("2.10.4", "2.11.5")
+crossScalaVersions := Seq("2.10.4", "2.11.7")
 
 resolvers ++= Seq(
   "Sonatype OSS Releases" at "http://oss.sonatype.org/content/repositories/releases/"
 )
 
 val ficusDependency = scalaVersion {
-  case ver_2_11 if  ver_2_11 startsWith "2.11." =>
-    "net.ceedubs" %% "ficus" % "1.1.2"
+  case ver_2_11 if ver_2_11 startsWith "2.11." =>
+    Ficus.Config.`1.1.2`
   case _ =>
-    "net.ceedubs" %% "ficus" % "1.0.1" exclude("com.typesafe", "config")
+    Ficus.Config.`1.0.1` exclude("com.typesafe", "config")
 }
 
 libraryDependencies ++= Seq(
-  "com.novus" %% "salat" % "1.9.9",
-  "com.typesafe" % "config" % "1.2.1"
+  Salat.`1.9.9`,
+  Typesafe.Config.`1.3.0`
 )
 
 libraryDependencies <+= ficusDependency
@@ -64,7 +64,7 @@ ReleaseKeys.releaseProcess := Seq[ReleaseStep](
 
 publishArtifact in Test := false
 
-pomExtra := githubPom(name.value,"Mateusz Jaje","Morgaroth")
+pomExtra := githubPom(name.value, "Mateusz Jaje", "Morgaroth")
 
 publishTo := publishRepoForVersion(version.value)
 
