@@ -1,7 +1,8 @@
 logLevel := Level.Warn
 
 resolvers ++= Seq(
-  "Sonatype OSS Releases" at "http://oss.sonatype.org/content/repositories/releases/"
+  "Sonatype OSS Releases" at "http://oss.sonatype.org/content/repositories/releases/",
+  Resolver.sonatypeRepo("snapshots")
 )
 
 addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.3.2")
@@ -14,4 +15,4 @@ addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.0")
 
 addSbtPlugin("io.github.morgaroth" % "sbt-sonatype-utils" % "0.2")
 
-addSbtPlugin("io.github.morgaroth" % "sbt-commons" % "0.12")
+addSbtPlugin("io.github.morgaroth" %% "sbt-commons" % "0.13-SNAPSHOT")
