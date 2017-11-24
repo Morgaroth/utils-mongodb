@@ -29,11 +29,11 @@ import scala.language.reflectiveCalls
   */
 abstract class MongoDAOAnyKey[ObjectType <: AnyRef, KeyType <: Any](
                                                                      config: Config,
-                                                                     collectionName: String,
+                                                                     collectionName: String
                                                                    )(implicit
                                                                      mot: Manifest[ObjectType],
                                                                      mkt: Manifest[KeyType],
-                                                                     ctx: SalatContext,
+                                                                     ctx: SalatContext
                                                                    )
   extends SalatDAO[ObjectType, KeyType](
     collection = {
