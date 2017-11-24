@@ -3,11 +3,24 @@
 # Sbt line
 
 ```scala
-libraryDependencies += "io.github.morgaroth" %% "utils-mongodb" % "2.0.0"
+resolvers += Resolver.bintrayRepo("morgaroth", "maven")
+libraryDependencies += "io.github.morgaroth" %% "utils-mongodb" % "3.0.1"
 ```
 
 # CHANGELOG
 
+
+* 3.0.1:
+
+    * added helper method getSerializerFor available in most places around code
+    * added publicly visible serializer of root object in DAO class
+
+* 3.0.0:
+
+    * migrated to sbt 1.0.3
+    * dropped crossbuild for scala 2.10.x
+    * added crossbuild for scala 2.12.x
+    * hosting moved from sonatype/maven to bintray, so versions 3.x.x + requires additional resolver to be added
 
 * 2.0.0:
 
@@ -15,7 +28,7 @@ libraryDependencies += "io.github.morgaroth" %% "utils-mongodb" % "2.0.0"
     * rewritten base class, now it is **MongoDayAnyKey**, it is initialized by **Config** and collecion name,
     next from this one extends classes **MongoDAOObjectIdKey** and **MongoDAO** which specifies key type (**MongoDAO** as default uses
     String key)
-    * all daos have **JodaSupport** subclasses which adds joda serializers to context 
+    * all daos have **JodaSupport** subclasses which adds joda serializers to context
     * all daos have **FromResource** subclasses which takes path (in config) and loads this config from resources
     * final list of accessible DAO mutations is:
         * initialized by config object:

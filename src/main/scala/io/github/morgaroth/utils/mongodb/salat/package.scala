@@ -3,8 +3,7 @@ package io.github.morgaroth.utils.mongodb
 import com.typesafe.config.{Config, ConfigFactory}
 import org.bson.types.ObjectId
 
-package object salat {
-
+package object salat extends HasGenericSerializer {
 
   // key type specified
   class MongoDAOObjectIdKey[ObjectType <: AnyRef](config: Config, collectionName: String)
