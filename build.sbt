@@ -21,6 +21,6 @@ libraryDependencies ++= Seq(
   Typesafe.Config.ver("1.3.2"),
 )
 
-//crossBuild := true
+releaseCrossBuild := true
 
 publishArtifact in Test := false
