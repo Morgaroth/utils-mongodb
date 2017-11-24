@@ -2,10 +2,9 @@ package io.github.morgaroth.utils.mongodb.salat
 
 import com.mongodb.casbah.Implicits._
 import com.mongodb.casbah.{MongoClient, MongoClientURI, WriteConcern}
-import com.novus.salat.Context
-import com.novus.salat.dao.SalatDAO
 import com.typesafe.config.Config
-import net.ceedubs.ficus.Ficus._
+import io.github.morgaroth.utils.mongodb.SalatContext
+import salat.dao.SalatDAO
 
 import scala.language.reflectiveCalls
 
@@ -27,11 +26,16 @@ import scala.language.reflectiveCalls
  * object FooDAO extends MongoDAOStringKey[Foo](config,"foos")
  *
  */
-abstract class MongoDAOAnyKey[ObjectType <: AnyRef, KeyType <: Any](config: Config, collectionName: String)
-                                                                   (implicit mot: Manifest[ObjectType], mkt: Manifest[KeyType], ctx: Context)
+abstract class MongoDAOAnyKey[ObjectType <: AnyRef, KeyType <: Any](
+                                                                     config: Config,
+                                                                     collectionName: String)
+                                                                   (
+                                                                     implicit mot: Manifest[ObjectType],
+                                                                     mkt: Manifest[KeyType],
+                                                                     ctx: SalatContext)
   extends SalatDAO[ObjectType, KeyType](
     collection = {
-      val clientURI = MongoClientURI(config.as[String]("uri"))
+      val clientURI = MongoClientURI(config.getString("uri"))
       val dbName = clientURI.database.getOrElse {
         throw new IllegalArgumentException(s"You must provide database name in connection uri")
       }

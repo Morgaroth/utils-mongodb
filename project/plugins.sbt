@@ -1,18 +1,13 @@
 logLevel := Level.Warn
 
 resolvers ++= Seq(
-  "Sonatype OSS Releases" at "http://oss.sonatype.org/content/repositories/releases/",
-  Resolver.sonatypeRepo("snapshots")
+//  "Sonatype OSS Releases" at "http://oss.sonatype.org/content/repositories/releases/",
+//  Resolver.sonatypeRepo("snapshots")
 )
 
-addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.3.2")
+addSbtPlugin("io.github.morgaroth" %% "sbt-commons" % "0.17")
 
-addSbtPlugin("com.github.gseitz" % "sbt-release" % "0.8.5")
+addSbtPlugin("org.foundweekends" % "sbt-bintray" % "0.5.1")
 
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "0.2.1")
+addSbtPlugin("com.github.gseitz" % "sbt-release" % "1.0.6")
 
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.0")
-
-addSbtPlugin("io.github.morgaroth" % "sbt-sonatype-utils" % "0.2")
-
-addSbtPlugin("io.github.morgaroth" %% "sbt-commons" % "0.13-SNAPSHOT")
